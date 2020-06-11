@@ -7,8 +7,22 @@ function say {
 function topic {
   echo "-----> $*"
 }
+function export_env_dir {
+  env_dir=$1
+  acceptlist_regex=${2:-''}
+  denylist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
+  if [ -d "$env_dir" ]; then
+    for e in $(ls $env_dir); do
+      echo "$e" | grep -E "$acceptlist_regex" | grep -qvE "$denylist_regex" &&
+      export "$e=$(cat $env_dir/$e)"
+      :
+    done
+  fi
+}
 
-topic Writing shellinabox startup script
+export_env_dir $3 '^(REFRESH_.*)$'
+
+topic Writing refresh startup script
 start_script=$1/bin/${REFRESH_WRAPPER_SCRIPT_NAME:-'start_refresh.sh'}
 say $start_script
 mkdir -p $1/bin
