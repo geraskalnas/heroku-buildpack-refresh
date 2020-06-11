@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+function say {
+  echo "       $*"
+}
+function topic {
+  echo "-----> $*"
+}
+
+topic Writing shellinabox startup script
+start_script=$1/bin/${REFRESH_WRAPPER_SCRIPT_NAME:-'start_refresh.sh'}
+say $start_script
+mkdir -p $1/bin
+cat <<EOF > $start_script
+#!/usr/bin/env bash
+
+
+while :
+do
+  if [ \${REFRESH_CONDITION:-"true"} ]
+  then
+    echo "Refreshing dyno"
+    \${REFRESH_COMMAND:-"wget \$HEROKU_URL"}
+    sleep \${REFRESH_DELAY:-\$((60*29))}
+  fi
+done
+
+EOF
+chmod +x $start_script
