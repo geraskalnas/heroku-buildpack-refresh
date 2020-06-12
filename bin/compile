@@ -34,7 +34,7 @@ cd \$HOME/tmp
 
 while :
 do
-  if [[ \${REFRESH_CONDITION:-"true"} ]]
+  if eval \${REFRESH_CONDITION:-"[ true ]"}
   then
     echo "Refreshing dyno"
     \${REFRESH_COMMAND:-"wget"} \$REFRESH_COMMAND_OPTS
