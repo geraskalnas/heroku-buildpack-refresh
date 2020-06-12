@@ -29,13 +29,15 @@ mkdir -p $1/bin
 cat <<EOF > $start_script
 #!/usr/bin/env bash
 
+mkdir -p \$HOME/tmp
+cd \$HOME/tmp
 
 while :
 do
   if [[ \${REFRESH_CONDITION:-"true"} ]]
   then
     echo "Refreshing dyno"
-    \${REFRESH_COMMAND:-"wget \$HEROKU_URL"}
+    \${REFRESH_COMMAND:-"wget"} \$REFRESH_COMMAND_OPTS
     sleep \${REFRESH_DELAY:-\$((60*29))}
   fi
 done
