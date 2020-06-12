@@ -38,8 +38,8 @@ do
   then
     echo "Refreshing dyno"
     \${REFRESH_COMMAND:-"wget"} \$REFRESH_COMMAND_OPTS
-    sleep \${REFRESH_DELAY:-\$((60*29))}
   fi
+  sleep \${REFRESH_DELAY:-\$((60*29))}
 done
 
 EOF
