@@ -32,7 +32,7 @@ cat <<EOF > $start_script
 
 while :
 do
-  if [ \${REFRESH_CONDITION:-"true"} ]
+  if [[ \${REFRESH_CONDITION:-"true"} ]]
   then
     echo "Refreshing dyno"
     \${REFRESH_COMMAND:-"wget \$HEROKU_URL"}
